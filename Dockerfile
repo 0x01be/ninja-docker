@@ -1,9 +1,6 @@
-FROM alpine:3.12.0 as builder
+FROM 0x01be/alpine:edge as builder
 
-RUN apk add --no-cache --virtual build-dependencies \
-    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-    --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
-    --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+RUN apk add --no-cache --virtual ninja-build-dependencies \
     git \
     build-base \
     python2 \
@@ -15,7 +12,7 @@ WORKDIR /opt/ninja
 
 RUN ./configure.py --bootstrap --host=linux --platform=linux
 
-FROM alpine:3.12.0
+FROM 0x01be/alpine:edge
 
 COPY --from=builder /opt/ninja/ /opt/ninja/
 
