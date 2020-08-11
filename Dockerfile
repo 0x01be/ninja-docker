@@ -1,4 +1,4 @@
-FROM 0x01be/alpine:edge as builder
+FROM alpine as builder
 
 RUN apk add --no-cache --virtual ninja-build-dependencies \
     git \
@@ -12,7 +12,7 @@ WORKDIR /opt/ninja
 
 RUN ./configure.py --bootstrap --host=linux --platform=linux
 
-FROM 0x01be/alpine:edge
+FROM alpine
 
 COPY --from=builder /opt/ninja/ /opt/ninja/
 
